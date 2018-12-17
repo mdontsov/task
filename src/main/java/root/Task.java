@@ -9,25 +9,23 @@ import java.util.*;
 
 public class Task {
 
-    private String line;
-    private BufferedReader bufferedReader;
-    private String propsPath;
-    private String inputPath;
-    private String outputPath;
+    private String propsFile;
+    private String inputFile;
+    private String outputFile;
 
     private void readSource() throws IOException {
-        propsPath = new String(Files.readAllBytes(Paths.get("example.properties")));
-        System.out.println(propsPath + "\n");
+        propsFile = new String(Files.readAllBytes(Paths.get("example.properties")));
+        System.out.println(propsFile + "\n");
     }
 
     private void readInput() throws IOException {
-        inputPath = new String(Files.readAllBytes(Paths.get("input.xml")));
-        System.out.println(inputPath);
+        inputFile = new String(Files.readAllBytes(Paths.get("input.xml")));
+        System.out.println(inputFile);
     }
 
     private void readOutput() throws IOException {
-        outputPath = inputPath = new String(Files.readAllBytes(Paths.get("output.xml")));
-        System.out.println(outputPath);
+        outputFile = inputFile = new String(Files.readAllBytes(Paths.get("output.xml")));
+        System.out.println(outputFile);
     }
 
     private void showHelp() {
@@ -58,14 +56,15 @@ public class Task {
         return new UUID(mostSigBits, leastSigBits).toString();
     }
 
-    private void readSourceAndProcessData() throws IOException {
+    public void readSourceAndProcessData() throws IOException {
 
-        propsPath = "example.properties";
+        propsFile = "example.properties";
         Map<String, String> propsMap = new HashMap();
 
-        inputPath = new String(Files.readAllBytes(Paths.get("input.xml")));
+        inputFile = new String(Files.readAllBytes(Paths.get("input.xml")));
 
-        bufferedReader = new BufferedReader(new FileReader(propsPath));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(propsFile));
+        String line;
         while ((line = bufferedReader.readLine()) != null) {
 
             line = line.replace("\"", "");
@@ -91,9 +90,9 @@ public class Task {
         }
 
         for (Map.Entry<String, String> entry : propsMap.entrySet()) {
-            inputPath = inputPath.replace("${" + entry.getKey() + "}", entry.getValue());
+            inputFile = inputFile.replace("${" + entry.getKey() + "}", entry.getValue());
             BufferedWriter writer = new BufferedWriter(new FileWriter("output.xml", false));
-            writer.write(inputPath);
+            writer.write(inputFile);
             writer.close();
         }
     }
