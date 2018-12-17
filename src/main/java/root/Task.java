@@ -11,6 +11,34 @@ public class Task {
 
     private String line;
     private BufferedReader bufferedReader;
+    private String propsPath;
+    private String inputPath;
+    private String outputPath;
+
+    private void readSource() throws IOException {
+        propsPath = new String(Files.readAllBytes(Paths.get("example.properties")));
+        System.out.println(propsPath + "\n");
+    }
+
+    private void readInput() throws IOException {
+        inputPath = new String(Files.readAllBytes(Paths.get("input.xml")));
+        System.out.println(inputPath);
+    }
+
+    private void readOutput() throws IOException {
+        outputPath = inputPath = new String(Files.readAllBytes(Paths.get("output.xml")));
+        System.out.println(outputPath);
+    }
+
+    private void showHelp() {
+        System.out.println(
+                "Use 'i' parameter for reading input file" + "\n" +
+                        "Use 'o' parameter for reading output file" + "\n" +
+                        "Use 'p' parameter for reading properties file" + "\n" +
+                        "Use 'i' and 'o' parameters for processing" + "\n" +
+                        "properties file to input file and store it as output file");
+
+    }
 
     private String createTimeStamp() {
         LocalDateTime now = LocalDateTime.now();
@@ -32,10 +60,10 @@ public class Task {
 
     private void readSourceAndProcessData() throws IOException {
 
-        String propsPath = "src/main/resources/example.properties";
+        propsPath = "example.properties";
         Map<String, String> propsMap = new HashMap();
 
-        String inputPath = new String(Files.readAllBytes(Paths.get("src/main/resources/input.xml")));
+        inputPath = new String(Files.readAllBytes(Paths.get("input.xml")));
 
         bufferedReader = new BufferedReader(new FileReader(propsPath));
         while ((line = bufferedReader.readLine()) != null) {
@@ -64,15 +92,35 @@ public class Task {
 
         for (Map.Entry<String, String> entry : propsMap.entrySet()) {
             inputPath = inputPath.replace("${" + entry.getKey() + "}", entry.getValue());
-            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/output.xml", false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("output.xml", false));
             writer.write(inputPath);
             writer.close();
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String... args) throws IOException {
 
         Task task = new Task();
-        task.readSourceAndProcessData();
+//        task.readSourceAndProcessData();
+        task.readSource();
+        task.readInput();
+        task.readOutput();
+        task.showHelp();
+
+        if (args.length == 1 && args[0].equalsIgnoreCase("i")) {
+            task.readInput();
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("o")) {
+            task.readOutput();
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("p")) {
+            task.readSource();
+        } else if (args.length == 2
+                && args[0].equalsIgnoreCase("i")
+                && args[1].equalsIgnoreCase("o")) {
+            task.readSourceAndProcessData();
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("h")) {
+            task.showHelp();
+        } else {
+            System.out.println(args.length);
+        }
     }
 }
