@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 import root.Task;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -39,6 +38,9 @@ public class TaskTest {
 
     @Test
     public void fileTransformationTest() throws IOException {
+        assertEquals(propsFile, propsFile);
+        assertEquals(inputFile, inputFile);
+        assertEquals(outputFile, outputFile);
         task.readSourceAndProcessData();
         assertEquals(propsFile, propsFile);
         assertNotEquals(inputFile, outputFile);
