@@ -38,12 +38,11 @@ public class TaskTest {
 
     @Test
     public void fileTransformationTest() throws IOException {
-        assertEquals(propsFile, propsFile);
-        assertEquals(inputFile, inputFile);
-        assertEquals(outputFile, outputFile);
+        File originalPropsFile = new File("example.properties");
+        File originalInputFile = new File("input.xml");
+        File originalOutputFile = new File("output.xml");
         task.readSourceAndProcessData();
-        assertEquals(propsFile, propsFile);
-        assertNotEquals(inputFile, outputFile);
+        assertNotEquals(originalInputFile, originalInputFile);
     }
 
 }
