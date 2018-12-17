@@ -42,19 +42,21 @@ public class Task {
 
             line = line.replace("\"", "");
             String[] parts = line.split("=");
-            for (String s : parts) {
-                if (s.toUpperCase().substring(0, 2).contains("<C")) {
-                    s = createTimeStamp();
+
+            for (int i = 0; i < parts.length; i++) {
+                if (parts[i].toUpperCase().substring(0, 2).contains("<C")) {
+                    parts[i] = createTimeStamp();
                 }
 
-                if (s.toUpperCase().substring(0, 2).contains("<U")) {
-                    s = createUUID();
+                if (parts[i].toUpperCase().substring(0, 2).contains("<U")) {
+                    parts[i] = createUUID();
                 }
 
-                if (s.toUpperCase().substring(0, 2).contains("<R")) {
-                    s = createRequestID();
+                if (parts[i].toUpperCase().substring(0, 2).contains("<R")) {
+                    parts[i] = createRequestID();
                 }
             }
+
             String key = parts[0];
             String value = parts[1];
             propsMap.put(key, value);
@@ -62,7 +64,7 @@ public class Task {
 
         for (Map.Entry<String, String> entry : propsMap.entrySet()) {
             inputPath = inputPath.replace("${" + entry.getKey() + "}", entry.getValue());
-            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/TEST2.xml"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/output.xml", false));
             writer.write(inputPath);
             writer.close();
         }
