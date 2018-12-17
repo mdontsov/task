@@ -19,7 +19,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>Test</mainClass>
+                            <mainClass>root.Task</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

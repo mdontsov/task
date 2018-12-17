@@ -102,10 +102,10 @@ public class Task {
 
         Task task = new Task();
 //        task.readSourceAndProcessData();
-        task.readSource();
-        task.readInput();
-        task.readOutput();
-        task.showHelp();
+//        task.readSource();
+//        task.readInput();
+//        task.readOutput();
+//        task.showHelp();
 
         if (args.length == 1 && args[0].equalsIgnoreCase("i")) {
             task.readInput();
